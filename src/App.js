@@ -8,15 +8,15 @@ class App extends Component {
     tasks: [
       {
         title: 'Clean floor',
-        completed: 'false',
+        completed: false,
       },
       {
         title: 'Give the Dog a Bath',
-        completed: 'false',
+        completed: false,
       },
       {
         title: 'Order Takeout food',
-        completed: 'true',
+        completed: true,
       },
     ],
     user: 'Justin Dimagiba'
@@ -24,7 +24,7 @@ class App extends Component {
 
   doneTaskHandler = (index) => {  
     const tasks = [ ...this.state.tasks ];
-    tasks[index].completed = 'true';
+    tasks[index].completed = true;
 
     this.setState({ tasks });
   }
