@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Task from './component/Task'
+import Task from './component/Task/Task'
 
 class App extends Component {
   state = {
