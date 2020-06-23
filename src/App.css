@@ -13,3 +13,11 @@
   padding: 10px;
 }
 
+.Task button {
+  height: 40px;
+  width: 90px;
+  background-color: goldenrod;
+  color: white;
+  border-color:gold;
+}
+
