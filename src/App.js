@@ -17,6 +17,7 @@ class App extends Component {
         completed: 'true',
       },
     ],
+    user: 'Justin Dimagiba'
   };
 
   doneTaskHandler = (index) => {  
@@ -26,10 +27,28 @@ class App extends Component {
     this.setState({ tasks });
   }
 
+  changeInputHandler = (event) => {
+    this.setState({
+      user: event.target.value
+    });
+  }
+
+  backToDefault = () =>{
+    this.setState({
+      user: 'Justin Dimagiba'
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <h1>Task Manager</h1>
+
+        <div className="User" onClick={this.backToDefault}>
+          <input type="text" onChange={this.changeInputHandler} value={this.state.user}></input>
+          <h3>These tasks are for {this.state.user}</h3>
+        </div>
+
         <div className="Task">
           <h3>{this.state.tasks[0].title}</h3>
           <p>Done: {this.state.tasks[0].completed}</p>
