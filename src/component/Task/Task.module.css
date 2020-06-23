@@ -10,6 +10,10 @@
   text-align: left;
 }
 
+.Task h3 {
+  font-size: 2.5rem;
+}
+
 .Completed {
   background-color: palegreen;
 }
@@ -24,6 +28,8 @@ img {
   height: 50px;
   float: right;
 }
+
+
 
 .inline {
   display: inline;
