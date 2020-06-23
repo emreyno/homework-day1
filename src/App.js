@@ -42,6 +42,16 @@ class App extends Component {
   }
 
   render() {
+
+    const tasks = this.state.tasks.map((task, index) => (
+      <Task
+        clicked={() => this.doneTaskHandler(index)}
+        completed={task.completed}
+      >
+        {task.title}
+      </Task>
+    ));
+
     return (
       <div className="App">
         <h1>Task Manager</h1>
@@ -51,24 +61,7 @@ class App extends Component {
           reset={this.backToDefault}
           user={this.state.user}
         />
-        <Task
-          clicked={() => this.doneTaskHandler(0)}
-          completed={this.state.tasks[0].completed}
-        >
-          {this.state.tasks[0].title}
-        </Task>
-        <Task
-          clicked={() => this.doneTaskHandler(1)}
-          completed={this.state.tasks[1].completed}
-        >
-          {this.state.tasks[1].title}
-        </Task>
-        <Task
-          clicked={() => this.doneTaskHandler(2)}
-          completed={this.state.tasks[2].completed}
-        >
-          {this.state.tasks[2].title}
-        </Task>
+        {tasks}
       </div>
     );
   }
