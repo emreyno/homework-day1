@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Task from './component/Task/Task'
+import User from './component/User/User'
 
 class App extends Component {
   state = {
@@ -45,15 +46,11 @@ class App extends Component {
       <div className="App">
         <h1>Task Manager</h1>
 
-        <div className="User" onClick={this.backToDefault}>
-          <input
-            type="text"
-            onChange={this.changeInputHandler}
-            value={this.state.user}
-          ></input>
-          <h3>These tasks are for {this.state.user}</h3>
-        </div>
-
+        <User
+          changed={this.changeInputHandler}
+          reset={this.backToDefault}
+          user={this.state.user}
+        />
         <Task
           clicked={() => this.doneTaskHandler(0)}
           completed={this.state.tasks[0].completed}
