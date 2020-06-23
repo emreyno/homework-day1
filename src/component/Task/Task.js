@@ -13,9 +13,16 @@ class Task extends Component {
     return (
       <div className={classNames.join(' ')}>
         <h3 className={styles.inline}>{this.props.children}</h3>
-        <img src="https://image.flaticon.com/icons/svg/929/929416.svg" alt="close"/>
-        <img src="https://image.flaticon.com/icons/png/512/846/846004.png" alt="check" onClick={this.props.clicked}/>
-        
+        <img
+          src="https://image.flaticon.com/icons/svg/929/929416.svg"
+          alt="close"
+          onClick={this.props.remove}
+        />
+        <img
+          src="https://image.flaticon.com/icons/png/512/846/846004.png"
+          alt="check"
+          onClick={this.props.clicked}
+        />
       </div>
     );
   }
