@@ -6,9 +6,11 @@
 .Task {
   margin: 20px auto;
   width: 1000px;
-  height: 50px;
+  height: 70px;
   border-color: 2px solid #CCC;
   box-shadow: 0 1px 2px 3px #EEE;
   border-radius: 5px;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
