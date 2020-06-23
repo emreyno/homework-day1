@@ -7,6 +7,9 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Task Manager</h1>
+        <div className="Task">Clean Bathroom</div>
+        <div className="Task">Feed Dog</div>
+        <div className="Task">Order Takeout food</div>
       </div>
     );
   }
