@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Task from './component/Task/Task'
 import User from './component/User/User'
+import AddTask from './component/AddTask/AddTask';
+import { v4 as uuidv4 } from 'uuid';
 
 class App extends Component {
   state = {
@@ -23,11 +25,12 @@ class App extends Component {
       },
     ],
     user: 'Justin Dimagiba',
+    newTask: '',
   };
 
   doneTaskHandler = (id) => {
     const tasks = [...this.state.tasks];
-    const taskIndex = tasks.findIndex(task => task.id === id);
+    const taskIndex = tasks.findIndex((task) => task.id === id);
     tasks[taskIndex].completed = true;
 
     this.setState({ tasks });
@@ -36,12 +39,12 @@ class App extends Component {
   deleteTaskHandler = (id) => {
     const tasks = [...this.state.tasks];
     const taskIndex = tasks.findIndex((task) => task.id === id);
-    tasks.splice(taskIndex,1);
+    tasks.splice(taskIndex, 1);
 
     this.setState({
-      tasks
-    })
-  }
+      tasks,
+    });
+  };
 
   changeInputHandler = (event) => {
     this.setState({
@@ -55,7 +58,25 @@ class App extends Component {
     });
   };
 
+  addTaskHandler = () => {
+    const tasks = [...this.state.tasks];
+    tasks.push({
+      id: uuidv4(),
+      title: this.state.newTask,
+      completed: false
+    });
 
+    this.setState({
+      tasks,
+      newTask: ''
+    })
+  };
+
+  inputNewTaskHandler = (event) => {
+     this.setState({
+       newTask: event.target.value,
+     });
+  };
 
   render() {
     let tasks = <h2>Wala ka talagang gagawin ngayong araw?</h2>;
@@ -76,8 +97,11 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Task Manager</h1>
-
-        <User changed={this.changeInputHandler} user={this.state.user} />
+        <AddTask
+          newTask={this.state.newTask}
+          changed={this.inputNewTaskHandler}
+          onAddTask={this.addTaskHandler}
+        />
         <button className="clearBtn" onClick={this.clearTaskHandler}>
           Clear Tasks
         </button>

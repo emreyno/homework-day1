@@ -1,0 +1,13 @@
+.addButton {
+  height: 40px;
+  width: 150px;
+  margin: 5px;
+  background-color: darkblue;
+  color: azure;
+}
+
+.addButton:hover {
+  background-color: skyblue;
+  color: wheat;
+  cursor: pointer;
+} 
