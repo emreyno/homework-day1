@@ -64,9 +64,10 @@ class App extends Component {
     });
   };
 
-  addTaskHandler = () => {
+
+  addTaskHandler = (taskTitle) => {
     const newTask = {
-      title: this.state.newTask,
+      title: taskTitle,
       completed: false,
     };
 
@@ -81,11 +82,12 @@ class App extends Component {
       }) 
   };
 
-  inputNewTaskHandler = (event) => {
-     this.setState({
-       newTask: event.target.value,
-     });
-  };
+
+
+  componentDidUpdate(){
+    const completedTasks = [...this.state.tasks].filter(task =>  task.completed);
+    alert(`You have completed ${completedTasks.length} out of ${this.state.tasks.length} tasks`);
+  }
 
   render() {
     let tasks = <h2>Wala ka talagang gagawin ngayong araw?</h2>;
@@ -107,8 +109,6 @@ class App extends Component {
       <div className="App">
         <h1>Task Manager</h1>
         <AddTask
-          newTask={this.state.newTask}
-          changed={this.inputNewTaskHandler}
           onAddTask={this.addTaskHandler}
         />
         <ClearTask
