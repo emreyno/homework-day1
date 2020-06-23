@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import Task from './component/Task/Task'
-import User from './component/User/User'
 import AddTask from './component/AddTask/AddTask';
 import { v4 as uuidv4 } from 'uuid';
+import ClearTask from './component/ClearTask/ClearTask';
 
 class App extends Component {
   state = {
@@ -102,9 +102,9 @@ class App extends Component {
           changed={this.inputNewTaskHandler}
           onAddTask={this.addTaskHandler}
         />
-        <button className="clearBtn" onClick={this.clearTaskHandler}>
-          Clear Tasks
-        </button>
+        <ClearTask
+          clicked={this.clearTaskHandler}
+        />
         {tasks}
       </div>
     );
