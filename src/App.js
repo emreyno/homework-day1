@@ -4,46 +4,52 @@ import Task from './component/Task/Task'
 import AddTask from './component/AddTask/AddTask';
 import { v4 as uuidv4 } from 'uuid';
 import ClearTask from './component/ClearTask/ClearTask';
+import axios from 'axios';
 
 class App extends Component {
   state = {
-    tasks: [
-      {
-        id: 1,
-        title: 'Clean floor',
-        completed: false,
-      },
-      {
-        id: 2,
-        title: 'Give the Dog a Bath',
-        completed: false,
-      },
-      {
-        id: 3,
-        title: 'Order Takeout food',
-        completed: true,
-      },
-    ],
+    tasks: [ ],
     user: 'Justin Dimagiba',
     newTask: '',
   };
 
-  doneTaskHandler = (id) => {
-    const tasks = [...this.state.tasks];
-    const taskIndex = tasks.findIndex((task) => task.id === id);
-    tasks[taskIndex].completed = true;
+  componentDidMount(){
+    axios.get('https://jsonplaceholder.typicode.com/todos')
+      .then(res => {
+        this.setState({
+          tasks: res.data
+        })
+      })
+  }
 
-    this.setState({ tasks });
+  doneTaskHandler = (id) => {
+    axios.put(`https://jsonplaceholder.typicode.com/todos/${id}`, {completed: true})
+      .then(res =>{
+        const tasks = [...this.state.tasks];
+        const taskIndex = tasks.findIndex((task) => task.id === id);
+        tasks[taskIndex].completed = true;
+
+        this.setState({tasks});
+      })
+      .catch(err => { 
+        alert(`Failed to update Task with Id: ${id}`)
+      });  
   };
 
   deleteTaskHandler = (id) => {
-    const tasks = [...this.state.tasks];
-    const taskIndex = tasks.findIndex((task) => task.id === id);
-    tasks.splice(taskIndex, 1);
+    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+      .then(res => {
+        const tasks = [...this.state.tasks];
+        const taskIndex = tasks.findIndex((task) => task.id === id);
+        tasks.splice(taskIndex, 1);
 
-    this.setState({
-      tasks,
-    });
+        this.setState({
+          tasks,
+        });
+      })
+      .catch(err => {
+        alert(`Failed to delete Task with Id: ${id}`);
+      })
   };
 
   changeInputHandler = (event) => {
@@ -59,17 +65,20 @@ class App extends Component {
   };
 
   addTaskHandler = () => {
-    const tasks = [...this.state.tasks];
-    tasks.push({
-      id: uuidv4(),
+    const newTask = {
       title: this.state.newTask,
-      completed: false
-    });
+      completed: false,
+    };
 
-    this.setState({
-      tasks,
-      newTask: ''
-    })
+    let tasks = []
+    axios.post('https://jsonplaceholder.typicode.com/todos', newTask)
+      .then(res => {
+        tasks = [res.data, ...this.state.tasks];
+         this.setState({
+           tasks,
+           newTask: '',
+         });
+      }) 
   };
 
   inputNewTaskHandler = (event) => {
