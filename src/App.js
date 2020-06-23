@@ -45,6 +45,7 @@ class App extends Component {
 
     const tasks = this.state.tasks.map((task, index) => (
       <Task
+        key={index}
         clicked={() => this.doneTaskHandler(index)}
         completed={task.completed}
       >
