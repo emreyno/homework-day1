@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class User extends Component{
   render(){
     return (
-      <div className="User" onClick={this.props.reset}>
+      <div className="User">
         <input
           type="text"
           onChange={this.props.changed}

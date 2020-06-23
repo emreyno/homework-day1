@@ -35,23 +35,29 @@ class App extends Component {
     });
   }
 
-  backToDefault = () =>{
+  clearTaskHandler = () =>{
     this.setState({
-      user: 'Justin Dimagiba'
+      tasks: []
     });
   }
 
   render() {
 
-    const tasks = this.state.tasks.map((task, index) => (
-      <Task
-        key={index}
-        clicked={() => this.doneTaskHandler(index)}
-        completed={task.completed}
-      >
-        {task.title}
-      </Task>
-    ));
+
+    let tasks = <h2>Congrats! Libre na araw mo!</h2>
+    
+    if (this.state.tasks.length > 0){
+      tasks = this.state.tasks.map((task, index) => (
+        <Task
+          key={index}
+          clicked={() => this.doneTaskHandler(index)}
+          completed={task.completed}
+        >
+          {task.title}
+        </Task>
+      ));
+    }
+   
 
     return (
       <div className="App">
@@ -59,9 +65,9 @@ class App extends Component {
 
         <User
           changed={this.changeInputHandler}
-          reset={this.backToDefault}
           user={this.state.user}
         />
+        <button className="clearBtn" onClick={this.clearTaskHandler}>Clear Tasks</button>
         {tasks}
       </div>
     );
