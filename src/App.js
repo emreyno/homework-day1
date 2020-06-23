@@ -25,7 +25,6 @@ class App extends Component {
       },
     ],
     user: 'Justin Dimagiba',
-    newTask: '',
   };
 
   doneTaskHandler = (id) => {
