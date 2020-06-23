@@ -75,8 +75,7 @@ class App extends Component {
       .then(res => {
         tasks = [res.data, ...this.state.tasks];
          this.setState({
-           tasks,
-           newTask: '',
+           tasks
          });
       }) 
   };
