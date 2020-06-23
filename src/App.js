@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Task from './component/Task'
 
 class App extends Component {
   state = {
@@ -45,25 +46,32 @@ class App extends Component {
         <h1>Task Manager</h1>
 
         <div className="User" onClick={this.backToDefault}>
-          <input type="text" onChange={this.changeInputHandler} value={this.state.user}></input>
+          <input
+            type="text"
+            onChange={this.changeInputHandler}
+            value={this.state.user}
+          ></input>
           <h3>These tasks are for {this.state.user}</h3>
         </div>
 
-        <div className="Task">
-          <h3>{this.state.tasks[0].title}</h3>
-          <p>Done: {this.state.tasks[0].completed}</p>
-          <button onClick={() => this.doneTaskHandler(0)}>I Am Done!</button>
-        </div>
-        <div className="Task">
-          <h3>{this.state.tasks[1].title}</h3>
-          <p>Done: {this.state.tasks[1].completed}</p>
-          <button onClick={() => this.doneTaskHandler(1)}>I Am Done!</button>
-        </div>
-        <div className="Task">
-          <h3>{this.state.tasks[2].title}</h3>
-          <p>Done: {this.state.tasks[2].completed}</p>
-          <button onClick={() => this.doneTaskHandler(2)}>I Am Done!</button>
-        </div>
+        <Task
+          clicked={() => this.doneTaskHandler(0)}
+          completed={this.state.tasks[0].completed}
+        >
+          {this.state.tasks[0].title}
+        </Task>
+        <Task
+          clicked={() => this.doneTaskHandler(1)}
+          completed={this.state.tasks[1].completed}
+        >
+          {this.state.tasks[1].title}
+        </Task>
+        <Task
+          clicked={() => this.doneTaskHandler(2)}
+          completed={this.state.tasks[2].completed}
+        >
+          {this.state.tasks[2].title}
+        </Task>
       </div>
     );
   }
