@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import styles from './AddTask.module.css';
 
 class AddTask extends Component {
+
+  shouldComponentUpdate(nextProps){
+    return nextProps.newTask !== this.props.newTask;
+  }
+
   render(){
     return (
       <div>
