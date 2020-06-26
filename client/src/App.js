@@ -12,7 +12,7 @@ class App extends Component {
   };
 
   componentDidMount(){
-    axios.get('https://jsonplaceholder.typicode.com/todos')
+    axios.get('http://localhost:8000/todos')
       .then(res => {
         this.setState({
           tasks: res.data
@@ -21,13 +21,9 @@ class App extends Component {
   }
 
   doneTaskHandler = (id) => {
-    axios.put(`https://jsonplaceholder.typicode.com/todos/${id}`, {completed: true})
+    axios.put(`http://localhost:8000/todos/${id}`, {completed: true})
       .then(res =>{
-        const tasks = [...this.state.tasks];
-        const taskIndex = tasks.findIndex((task) => task.id === id);
-        tasks[taskIndex].completed = true;
-
-        this.setState({tasks});
+        this.setState({tasks: res.data});
       })
       .catch(err => { 
         alert(`Failed to update Task with Id: ${id}`)
@@ -35,14 +31,10 @@ class App extends Component {
   };
 
   deleteTaskHandler = (id) => {
-    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    axios.delete(`http://localhost:8000/todos/${id}`)
       .then(res => {
-        const tasks = [...this.state.tasks];
-        const taskIndex = tasks.findIndex((task) => task.id === id);
-        tasks.splice(taskIndex, 1);
-
         this.setState({
-          tasks,
+          tasks: res.data
         });
       })
       .catch(err => {
@@ -70,20 +62,18 @@ class App extends Component {
     };
 
     let tasks = []
-    axios.post('https://jsonplaceholder.typicode.com/todos', newTask)
-      .then(res => {
-        tasks = [res.data, ...this.state.tasks];
-         this.setState({
-           tasks
-         });
-      }) 
+    axios.post('http://localhost:8000/todos', newTask).then((res) => {
+      tasks = [res.data, ...this.state.tasks];
+      this.setState({
+        tasks,
+      });
+    }); 
   };
 
 
 
   componentDidUpdate(){
-    const completedTasks = [...this.state.tasks].filter(task =>  task.completed);
-    alert(`You have completed ${completedTasks.length} out of ${this.state.tasks.length} tasks`);
+
   }
 
   render() {
