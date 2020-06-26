@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Task from './component/Task/Task'
 import AddTask from './component/AddTask/AddTask';
-import { v4 as uuidv4 } from 'uuid';
 import ClearTask from './component/ClearTask/ClearTask';
 import axios from 'axios';
 
