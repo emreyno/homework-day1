@@ -39,7 +39,7 @@ app.delete('/todos/:id', async (req, res) => {
   res.json(taskManager.removeTodo(req.params.id));
 });
 
-app.put('/todos/clear', (req, res) => {
+app.post('/clear/todos', (req, res) => {
   res.json(taskManager.clearTodos());
 })
 

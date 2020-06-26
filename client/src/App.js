@@ -49,8 +49,11 @@ class App extends Component {
   };
 
   clearTaskHandler = () => {
-    this.setState({
-      tasks: [],
+    axios.post(`http://localhost:8000/clear/todos`)
+    .then((result) => {
+      this.setState({
+        tasks: result.data
+      })
     });
   };
 
