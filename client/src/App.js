@@ -7,7 +7,7 @@ import axios from 'axios';
 
 class App extends Component {
   state = {
-    tasks: [ ],
+    tasks: [],
     user: 'Justin Dimagiba',
   };
 
@@ -17,6 +17,9 @@ class App extends Component {
         this.setState({
           tasks: res.data
         })
+      })
+      .catch(err =>{
+        alert('Error in getting todos');
       })
   }
 

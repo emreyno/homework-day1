@@ -5,12 +5,20 @@ const taskManager = require('./taskManager');
 
 const app = express()
 const port = 8000;
+const key = 'hulaanmo';
 
 app.listen(port, () => {
   console.log(`Todo Server is now listening to port ${8000}`);
 })
 
 app.use(cors());
+app.use((req, res, next) =>{
+  if (req.headers.authorization === key){
+    next();
+  }else {
+    res.sendStatus(401);
+  }
+});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
