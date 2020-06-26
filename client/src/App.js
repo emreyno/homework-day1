@@ -12,7 +12,7 @@ class App extends Component {
   };
 
   componentDidMount(){
-    axios.get('http://localhost:8000/todos')
+    axios.get('/todos')
       .then(res => {
         this.setState({
           tasks: res.data
@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   doneTaskHandler = (id) => {
-    axios.put(`http://localhost:8000/todos/${id}`, {completed: true})
+    axios.put(`/todos/${id}`, {completed: true})
       .then(res =>{
         this.setState({tasks: res.data});
       })
@@ -31,7 +31,7 @@ class App extends Component {
   };
 
   deleteTaskHandler = (id) => {
-    axios.delete(`http://localhost:8000/todos/${id}`)
+    axios.delete(`/todos/${id}`)
       .then(res => {
         this.setState({
           tasks: res.data
@@ -62,7 +62,7 @@ class App extends Component {
     };
 
     let tasks = []
-    axios.post('http://localhost:8000/todos', newTask).then((res) => {
+    axios.post('/todos', newTask).then((res) => {
       tasks = [res.data, ...this.state.tasks];
       this.setState({
         tasks,
