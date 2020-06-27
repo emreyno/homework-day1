@@ -3,6 +3,10 @@ import styles from './Task.module.css';
 
 class Task extends Component {
 
+  shouldComponentUpdate(nextProps, nextState){
+    return this.props.completed !== nextProps.completed;
+  }
+
   render(){
     
     let classNames = [ styles.Task ];
