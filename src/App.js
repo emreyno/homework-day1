@@ -4,6 +4,7 @@ import Task from './component/Task/Task'
 import AddTask from './component/AddTask/AddTask';
 import { v4 as uuidv4 } from 'uuid';
 import ClearTask from './component/ClearTask/ClearTask';
+import User from './component/User/User';
 
 class App extends Component {
   state = {
@@ -63,19 +64,25 @@ class App extends Component {
     tasks.push({
       id: uuidv4(),
       title: this.state.newTask,
-      completed: false
+      completed: false,
     });
 
     this.setState({
       tasks,
-      newTask: ''
-    })
+      newTask: '',
+    });
   };
 
   inputNewTaskHandler = (event) => {
-     this.setState({
-       newTask: event.target.value,
-     });
+    this.setState({
+      newTask: event.target.value,
+    });
+  };
+
+  changeInputHandler = (event) => {
+    this.setState({
+      user: event.target.value,
+    });
   };
 
   render() {
@@ -97,14 +104,13 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Task Manager</h1>
+        <User changed={this.changeInputHandler} user={this.state.user} />
         <AddTask
           newTask={this.state.newTask}
           changed={this.inputNewTaskHandler}
           onAddTask={this.addTaskHandler}
         />
-        <ClearTask
-          clicked={this.clearTaskHandler}
-        />
+        <ClearTask clicked={this.clearTaskHandler} />
         {tasks}
       </div>
     );
