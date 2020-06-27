@@ -4,11 +4,11 @@ import Task from './component/Task/Task'
 import AddTask from './component/AddTask/AddTask';
 import ClearTask from './component/ClearTask/ClearTask';
 import axios from 'axios';
+import User from './component/User/User';
 
 class App extends Component {
   state = {
-    tasks: [ ],
-    user: 'Justin Dimagiba',
+     tasks: [ ],
   };
 
   componentDidMount(){
@@ -91,6 +91,17 @@ class App extends Component {
 
   }
 
+  inputNewTaskHandler = (event) => {
+    this.setState({
+      newTask: event.target.value,
+    });
+  };
+
+  changeInputHandler = (event) => {
+    this.setState({
+      user: event.target.value,
+    });
+  };
   render() {
     let tasks = <h2>Wala ka talagang gagawin ngayong araw?</h2>;
 
@@ -110,12 +121,11 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Task Manager</h1>
+        <User changed={this.changeInputHandler} user={this.state.user} />
         <AddTask
           onAddTask={this.addTaskHandler}
         />
-        <ClearTask
-          clicked={this.clearTaskHandler}
-        />
+        <ClearTask clicked={this.clearTaskHandler} />
         {tasks}
       </div>
     );
