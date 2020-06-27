@@ -81,9 +81,14 @@ class App extends Component {
 
 
 
-  componentDidUpdate(){
+  componentDidUpdate(prevProps, prevState){
     const completedTasks = [...this.state.tasks].filter(task =>  task.completed);
-    alert(`You have completed ${completedTasks.length} out of ${this.state.tasks.length} tasks`);
+    if (prevState.tasks.length > this.state.tasks.length) {
+      alert(`A tasks has been removed. Tasks remaining ${this.state.tasks.length}`); 
+    }else {
+      alert(`You've completed ${completedTasks.length}`);
+    }
+
   }
 
   render() {
