@@ -26,7 +26,7 @@ module.exports = {
     return todos;
   },
   clearTodos: () =>{
-    todos = []
+    todos = [...[]]
     return todos;
   }
 }
