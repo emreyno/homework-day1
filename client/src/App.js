@@ -5,10 +5,13 @@ import AddTask from './component/AddTask/AddTask';
 import ClearTask from './component/ClearTask/ClearTask';
 import axios from 'axios';
 import User from './component/User/User';
+import Backdrop from './UI/Backdrop';
 
 class App extends Component {
   state = {
      tasks: [ ],
+     loading: false,
+     loadingMessage: ''
   };
 
   componentDidMount(){
@@ -24,35 +27,34 @@ class App extends Component {
   }
 
   doneTaskHandler = (id) => {
+    this.setState({ loading: true, loadingMessage: `Marking task ${id} as complete...` });
     axios.put(`/todos/${id}`, {completed: true})
       .then(res =>{
-        this.setState({tasks: res.data});
+        this.setState({tasks: res.data, loading: false });
       })
       .catch(err => { 
-        alert(`Failed to update Task with Id: ${id}`)
+        alert(`Failed to update Task with Id: ${id}`);
+        this.setState({ loading: false });
       });  
   };
 
   deleteTaskHandler = (id) => {
+    this.setState({ loading: true, loadingMessage: `Deleting task ${id}...` });
     axios.delete(`/todos/${id}`)
       .then(res => {
         this.setState({
-          tasks: res.data
+          tasks: res.data,
+          loading: false
         });
       })
       .catch(err => {
         alert(`Failed to delete Task with Id: ${id}`);
+        this.setState({ loading: false });
       })
   };
 
-  changeInputHandler = (event) => {
-    this.setState({
-      user: event.target.value,
-    });
-  };
-
   clearTaskHandler = () => {
-    axios.post(`http://localhost:8000/clear/todos`)
+    axios.post(`/clear/todos`)
     .then((result) => {
       this.setState({
         tasks: result.data
@@ -62,6 +64,7 @@ class App extends Component {
 
 
   addTaskHandler = (taskTitle) => {
+    this.setState({ loading: true, loadingMessage: `Adding new Task...` });
     const newTask = {
       title: taskTitle,
       completed: false,
@@ -72,8 +75,13 @@ class App extends Component {
       tasks = [res.data, ...this.state.tasks];
       this.setState({
         tasks,
+        loading: false,
       });
-    }); 
+    })
+    .catch(err => {
+      alert('Failed to Add Tasks');
+      this.setState({ loading: false });
+    })
   };
 
 
@@ -81,9 +89,10 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState){
     const completedTasks = [...this.state.tasks].filter(task =>  task.completed);
+    const prevCompletedTasks = [...prevState.tasks].filter(task =>  task.completed);
     if (prevState.tasks.length > this.state.tasks.length) {
       alert(`A tasks has been removed. Tasks remaining ${this.state.tasks.length}`); 
-    }else {
+    }else if (completedTasks.length > prevCompletedTasks.length) {
       alert(`You've completed ${completedTasks.length}`);
     }
   }
@@ -117,11 +126,10 @@ class App extends Component {
 
     return (
       <div className="App">
+        <Backdrop show={this.state.loading} message={this.state.loadingMessage} />
         <h1>Task Manager</h1>
         <User changed={this.changeInputHandler} user={this.state.user} />
-        <AddTask
-          onAddTask={this.addTaskHandler}
-        />
+        <AddTask onAddTask={this.addTaskHandler} />
         <ClearTask clicked={this.clearTaskHandler} />
         {tasks}
       </div>
