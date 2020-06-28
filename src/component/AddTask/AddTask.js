@@ -1,34 +1,34 @@
-import React, { Component } from 'react';
+import React, { useEffect,  useState, memo } from 'react';
 import styles from './AddTask.module.css';
 
-class AddTask extends Component {
+const AddTask = memo((props) => {
 
-  state = {
+ 
+  const [state, setState] = useState({
     newTask: ''
-  }
+  });
 
-  shouldComponentUpdate(nextProps, nextState){
-    return nextState.newTask !== this.state.newTask;
-  }
+  useEffect(()=>{
+    console.log('[AddTask.js] Use Effect called!');
+  }, [state.newTask]);
 
-  inputNewTaskHandler = (event) => {
-     this.setState({
+
+  const inputNewTaskHandler = (event) => {
+     setState({
        newTask: event.target.value,
      });
   };
 
-  render(){
-    return (
+  return (
       <div>
         <p>Task Name</p>
-        <input type="text" value={this.state.newTask} onChange={this.inputNewTaskHandler}></input>
+        <input type="text" value={state.newTask} onChange={inputNewTaskHandler}></input>
         <div>
-          <button className={styles.addButton} onClick={() => this.props.onAddTask(this.state.newTask)}>Add Task</button>
+          <button className={styles.addButton} onClick={() => props.onAddTask(state.newTask)}>Add Task</button>
         </div>
       </div>
     );
-  }
 
-}
+});
 
 export default AddTask;

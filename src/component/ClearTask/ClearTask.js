@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 
-class ClearTask extends Component {
-
-  shouldComponentUpdate(){
-    return false;
-  }
+class ClearTask extends PureComponent {
 
   render() {
     return (
