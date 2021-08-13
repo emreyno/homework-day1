@@ -11,8 +11,6 @@ const App = (props) => {
 
   const [state, setState] = useState({
     tasks: [],
-    loading: false,
-    loadingMessage: ''
   });
 
   useEffect(() => {
@@ -26,31 +24,28 @@ const App = (props) => {
   },[])
 
   const doneTaskHandler = (id) => {
-    setState({ ...state, loading: true, loadingMessage: `Marking task ${id} as complete...` });
     axios.put(`/todos/${id}`, {completed: true})
       .then(res =>{
-        setState({ ...state, tasks: res.data, loading: false });
+        setState({ ...state, tasks: res.data});
       })
       .catch(err => { 
         alert(`Failed to update Task with Id: ${id}`);
-        setState({ ...state, loading: false });
+        setState({ ...state });
       });  
   };
 
   const deleteTaskHandler = (id) => {
-    setState({ ...state, loading: true, loadingMessage: `Deleting task ${id}...`});
     axios.delete(`/todos/${id}`)
       .then(res => {
 
         setState({
           ...state,
           tasks: res.data,
-          loading: false,
         });
       })
       .catch(err => {
         alert(`Failed to delete Task with Id: ${id}`);
-        setState({ ...state, oading: false });
+        setState({ ...state });
       })
   };
 
@@ -70,7 +65,7 @@ const App = (props) => {
 
 
   const addTaskHandler = (taskTitle) => {
-    setState({ ...state, loading: true, loadingMessage: `Adding new Task...` });
+    setState({ ...state });
     const newTask = {
       title: taskTitle,
       completed: false,
@@ -82,13 +77,12 @@ const App = (props) => {
         tasks = [res.data, ...state.tasks];
          setState({
            ...state,
-           tasks,
-           loading: false
+           tasks
          });
       })
       .catch(err => {
         alert('Failed to Add Task');
-        setState({ ...state, loading: false });
+        setState({ ...state });
       }) 
     }
 
