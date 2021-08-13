@@ -1,15 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { memo } from 'react';
 
 
-class ClearTask extends PureComponent {
-
-  render() {
-    return (
-      <button className="clearBtn" onClick={this.props.clicked}>
-        Clear Tasks
-      </button>
-    );
-  }
-}
+const  ClearTask  = memo((props) => {
+  return (
+    <button className="clearBtn" onClick={props.clicked}>
+      Clear Tasks
+    </button>
+  );
+});
 
 export default ClearTask;

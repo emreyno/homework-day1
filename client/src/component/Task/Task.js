@@ -1,35 +1,33 @@
-import React, { Component } from 'react';
+import React, { memo } from 'react';
 import styles from './Task.module.css';
 
-class Task extends Component {
+const completedEqual = (prevProps, nextProps) => {
+  return prevProps.completed === nextProps.completed
+}
 
-  shouldComponentUpdate(nextProps, nextState){
-    return this.props.completed !== nextProps.completed;
-  }
 
-  render(){
-    
-    let classNames = [ styles.Task ];
-    this.props.completed
+const Task = memo((props) => {
+
+  let classNames = [ styles.Task ];
+    props.completed
       ? classNames.push(styles.Completed)
       : classNames.push(styles.Incomplete);
 
-    return (
+  return (
       <div className={classNames.join(' ')}>
-        <h3 className={styles.inline}>{this.props.children}</h3>
+        <h3 className={styles.inline}>{props.children}</h3>
         <img
           src="https://image.flaticon.com/icons/svg/929/929416.svg"
           alt="close"
-          onClick={this.props.remove}
+          onClick={props.remove}
         />
         <img
           src="https://image.flaticon.com/icons/png/512/846/846004.png"
           alt="check"
-          onClick={this.props.clicked}
+          onClick={props.clicked}
         />
       </div>
     );
-  }
-}
+}, completedEqual);
 
 export default Task;

@@ -7,9 +7,15 @@ const app = express()
 const port = 8000;
 const key = 'hulaanmo';
 
+const simulateDelay = (res, req, next) => {
+  setTimeout(() => {
+    next();
+  }, 500);
+}
+
 app.listen(port, () => {
   console.log(`Todo Server is now listening to port ${8000}`);
-})
+});
 
 app.use(cors());
 app.use((req, res, next) =>{
@@ -26,6 +32,8 @@ app.use((req, res, next) => {
   console.log(`Route called ${req.method} ${req.originalUrl}`);
   next();
 });
+
+app.use(simulateDelay);
 
 app.get('/', (req, res) =>{
   res.send('Todo Server up, Lakad Matatag!!!')
@@ -57,3 +65,4 @@ app.use((req, res, next) =>{
   res.status('404').send('Na mali ka po ng ruta');
   next();
 })
+
