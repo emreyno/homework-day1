@@ -6,6 +6,9 @@ import ClearTask from './component/ClearTask/ClearTask';
 import axios from 'axios';
 import User from './component/User/User';
 import withLoading from './HOC/withLoading';
+import { Route, Switch } from 'react-router';
+import { Link } from 'react-router-dom';
+
 
 const App = (props) => {
 
@@ -111,12 +114,38 @@ const App = (props) => {
   return (
     <div className="App">
       <h1>Task Manager</h1>
-      <User changed={changeInputHandler} user={state.user} />
-      <AddTask onAddTask={addTaskHandler} />
-      <ClearTask clicked={clearTaskHandler} />
-      {tasks}
+
+      <nav className="topnav">
+        <ul>
+          <li>
+            <Link className="link" to="/">Home</Link>
+          </li>
+          <li>
+            <Link className="link" to="/add">Add Tasks</Link>
+          </li>
+          <li>
+            <Link className="link" to="/users">Users</Link>
+          </li>
+          <li>
+            <Link className="link" to="/tasks">Tasks</Link>
+          </li>
+        </ul>
+      </nav>
+      <Switch>
+        <Route path="/users">
+          <User changed={changeInputHandler} user={state.user} />
+        </Route>
+        <Route path="/add">
+          <AddTask onAddTask={addTaskHandler} />
+        </Route>
+        <Route path="/tasks">
+          <ClearTask clicked={clearTaskHandler} />
+          {tasks}
+        </Route>
+      </Switch>
     </div>
   );
+
   
 }
 
