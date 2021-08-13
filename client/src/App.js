@@ -5,7 +5,7 @@ import AddTask from './component/AddTask/AddTask';
 import ClearTask from './component/ClearTask/ClearTask';
 import axios from 'axios';
 import User from './component/User/User';
-import Backdrop from './UI/Backdrop';
+import withLoading from './HOC/withLoading';
 
 const App = (props) => {
 
@@ -110,7 +110,6 @@ const App = (props) => {
 
   return (
     <div className="App">
-      <Backdrop show={state.loading} message={state.loadingMessage} />
       <h1>Task Manager</h1>
       <User changed={changeInputHandler} user={state.user} />
       <AddTask onAddTask={addTaskHandler} />
@@ -121,4 +120,4 @@ const App = (props) => {
   
 }
 
-export default App;
+export default withLoading(App);
