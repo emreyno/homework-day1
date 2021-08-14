@@ -1,99 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Task from './component/Task/Task'
 import AddTask from './component/AddTask/AddTask';
 import ClearTask from './component/ClearTask/ClearTask';
-import axios from 'axios';
 import User from './component/User/User';
 import withLoading from './HOC/withLoading';
 import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const App = (props) => {
 
-  const [state, setState] = useState({
-    tasks: [],
-  });
+  // const [state, setState] = useState({
+  //   tasks: [],
+  // });
+  const getTasks = (state) => state.todo.tasks;
+
+  const reduxTasks = useSelector(getTasks);
 
   useEffect(() => {
-    axios.get('/todos')
-    .then(res => {
-      setState({
-        ...state,
-        tasks: res.data
-      });
-    }); // eslint-disable-next-line 
   },[])
 
   const doneTaskHandler = (id) => {
-    axios.put(`/todos/${id}`, {completed: true})
-      .then(res =>{
-        setState({ ...state, tasks: res.data});
-      })
-      .catch(err => { 
-        alert(`Failed to update Task with Id: ${id}`);
-        setState({ ...state });
-      });  
+    
   };
 
   const deleteTaskHandler = (id) => {
-    axios.delete(`/todos/${id}`)
-      .then(res => {
-
-        setState({
-          ...state,
-          tasks: res.data,
-        });
-      })
-      .catch(err => {
-        alert(`Failed to delete Task with Id: ${id}`);
-        setState({ ...state });
-      })
+  
   };
 
-  const changeInputHandler = (event) => {
-    setState({
-      ...state,
-      user: event.target.value,
-    });
-  };
+  // const changeInputHandler = (event) => {
+    
+  // };
 
   const clearTaskHandler = () => {
-    setState({
-      ...state,
-      tasks: [],
-    });
   };
-
-
-  const addTaskHandler = (taskTitle) => {
-    setState({ ...state });
-    const newTask = {
-      title: taskTitle,
-      completed: false,
-    };
-
-    let tasks = []
-    axios.post('/todos', newTask)
-      .then(res => {
-        tasks = [res.data, ...state.tasks];
-         setState({
-           ...state,
-           tasks
-         });
-      })
-      .catch(err => {
-        alert('Failed to Add Task');
-        setState({ ...state });
-      }) 
-    }
-
 
   let tasks = <h2>Wala ka talagang gagawin ngayong araw?</h2>;
 
-  if (state.tasks.length > 0) {
-    tasks = state.tasks.map((task) => (
+  if (reduxTasks.length > 0) {
+    tasks = reduxTasks.map((task) => (
       <Task
         key={task.id}
         clicked={() => doneTaskHandler(task.id)}
@@ -127,10 +74,10 @@ const App = (props) => {
       </nav>
       <Switch>
         <Route path="/users">
-          <User changed={changeInputHandler} user={state.user} />
+          <User/>
         </Route>
         <Route path="/add">
-          <AddTask onAddTask={addTaskHandler} />
+          <AddTask  />
         </Route>
         <Route path="/tasks">
           <ClearTask clicked={clearTaskHandler} />

@@ -5,16 +5,22 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 import { BrowserRouter as Router } from 'react-router-dom';
+import store from './redux/store';
+import { Provider } from 'react-redux';
 
 axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.headers.common['Authorization'] = 'hulaanmo';
 
+
+
 ReactDOM.render(
-  <Router>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Router>,
+  <Provider store={store}>
+    <Router>
+     <React.StrictMode>
+       <App />
+     </React.StrictMode>
+   </Router>
+  </Provider>,
   document.getElementById('root')
 );
 
