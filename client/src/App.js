@@ -7,48 +7,44 @@ import User from './component/User/User';
 import withLoading from './HOC/withLoading';
 import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { doneTask,removeTask} from './redux/reducers/todo-reducer';
 
 const App = (props) => {
 
-  // const [state, setState] = useState({
-  //   tasks: [],
-  // });
+ 
+  
+  useEffect(() => {
+  },[])
+
   const getTasks = (state) => state.todo.tasks;
 
   const reduxTasks = useSelector(getTasks);
 
-  useEffect(() => {
-  },[])
-
-  const doneTaskHandler = (id) => {
-    
-  };
-
-  const deleteTaskHandler = (id) => {
+  const dispatch = useDispatch();
+ 
+  const doneTaskHandler = (title) => {
+    dispatch(doneTask(title));
   
   };
 
-  // const changeInputHandler = (event) => {
+  const deleteTaskHandler = (title) => {
+    dispatch(removeTask(title));
     
-  // };
-
-  const clearTaskHandler = () => {
   };
 
+
+  console.log(reduxTasks);
   let tasks = <h2>Wala ka talagang gagawin ngayong araw?</h2>;
 
   if (reduxTasks.length > 0) {
     tasks = reduxTasks.map((task) => (
       <Task
         key={task.id}
-        clicked={() => doneTaskHandler(task.id)}
-        remove={() => deleteTaskHandler(task.id)}
-        completed={task.completed}
-      >
-        {task.title}
-      </Task>
+        task ={task}
+        done={doneTaskHandler}
+        remove ={deleteTaskHandler}
+      /> 
     ));
   }
 
@@ -80,7 +76,7 @@ const App = (props) => {
           <AddTask  />
         </Route>
         <Route path="/tasks">
-          <ClearTask clicked={clearTaskHandler} />
+          <ClearTask />
           {tasks}
         </Route>
       </Switch>

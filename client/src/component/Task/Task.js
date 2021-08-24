@@ -1,33 +1,38 @@
-import React, { memo } from 'react';
+import React, { memo,useEffect } from 'react';
 import styles from './Task.module.css';
+
 
 const completedEqual = (prevProps, nextProps) => {
   return prevProps.completed === nextProps.completed
 }
 
 
-const Task = memo((props) => {
+const Task = ({task,done,remove}) => {
+
+
+
 
   let classNames = [ styles.Task ];
-    props.completed
+  task.completed
       ? classNames.push(styles.Completed)
       : classNames.push(styles.Incomplete);
+  
 
   return (
       <div className={classNames.join(' ')}>
-        <h3 className={styles.inline}>{props.children}</h3>
+        <h3 className={styles.inline}>{task.title}</h3>
         <img
           src="https://image.flaticon.com/icons/svg/929/929416.svg"
           alt="close"
-          onClick={props.remove}
+          onClick={()=>remove(task.title)}
         />
         <img
           src="https://image.flaticon.com/icons/png/512/846/846004.png"
           alt="check"
-          onClick={props.clicked}
+          onClick={()=>done(task.title)}
         />
       </div>
     );
-}, completedEqual);
+};
 
 export default Task;
